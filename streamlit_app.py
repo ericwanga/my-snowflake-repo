@@ -1,4 +1,5 @@
 
-import streamlit
+import streamlit as st
 
-streamlit.title('My Title')
+st.title('My Title')
+st.title('Another :blue[Title] :sunglasses:')
