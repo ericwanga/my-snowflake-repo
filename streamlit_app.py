@@ -27,6 +27,6 @@ fruits_to_show = my_fruit_df.loc[fruits_selected]
 st.dataframe(fruits_to_show)
 
 # call fruityvice API (does not require key)
-st.head('Fruityvice Fruit Advice!')
+st.header('Fruityvice Fruit Advice!')
 fruityvice_response = requests.get('https://fruityvice.com/api/fruit/watermelon')
 st.text(fruityvice_response.json())
