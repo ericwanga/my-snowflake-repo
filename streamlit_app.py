@@ -1,6 +1,7 @@
 
 import streamlit as st
 import pandas as pd
+import requests
 import snowflake.connector
 from urllib.error import URLError
 
@@ -30,16 +31,17 @@ st.dataframe(fruits_to_show)
 
 # call fruityvice API (does not require key)
 st.header('Fruityvice Fruit Advice!')
-fruit_choice = st.text_input('What fruit would you like information about?', 'Kiwi')
-st.write('The user entered', fruit_choice)
+try:
+    fruit_choice = st.text_input('What fruit would you like information about?')  # ,'Kiwi'
+    if not fruit_choice:
+        st.error('Please select a fruit to get information.')
+    else:
+        fruityvice_response = requests.get('https://fruityvice.com/api/fruit/' + fruit_choice)
+        fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+        st.dataframe(fruityvice_normalized)
 
-
-import requests
-fruityvice_response = requests.get('https://fruityvice.com/api/fruit/' + fruit_choice)
-
-# st.text(fruityvice_response.json())
-fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-st.dataframe(fruityvice_normalized)
+except URLError as e:
+    st.error()
 
 
 # my_datagov_api_key = 'm9q3NAYhygSJDZhdELVIxChsgVgMNi2a7AM9DdLS'
