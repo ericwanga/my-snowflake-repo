@@ -52,27 +52,24 @@ except URLError as e:
 
 # st.text()
 
-# st.stop()
-
-
-
-
-my_cnx = snowflake.connector.connect(**st.secrets['snowflake'])
-my_cur = my_cnx.cursor()
-
-# my_cur.execute('SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()')
-# my_data_row = my_cur.fetchone()
-my_cur.execute('SELECT * from fruit_load_list')
-my_data_row = my_cur.fetchall()
-st.text(my_data_row)
 
 st.header('The fruit load list contains:')
-st.dataframe(my_data_row)
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur:
+        # my_cur.execute('SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()')
+        # return my_cur.fetchone()
+        my_cur.execute('SELECT * from fruit_load_list')
+        return my_cur.fetchall()
+
+# add a button to load fruit list
+if st.button('Get Fruit Load List'):
+    my_cnx = snowflake.connector.connect(**st.secrets['snowflake'])
+    my_data_row = get_fruit_load_list()
+    st.dataframe(my_data_row)
 
 
 # add multiselect
 st.header('You can add a fruit to the list')
-st.text('What fruit would you like to add?')
 add_my_fruit = st.text_input('What fruit would you like to add?')
 st.write('The user added fruit:', add_my_fruit)
 
