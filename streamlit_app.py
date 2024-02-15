@@ -52,8 +52,7 @@ except URLError as e:
 
 # st.text()
 
-
-st.header('The fruit load list contains:')
+st.header('View Our Fruit List - Add Your Favorites!')
 def get_fruit_load_list():
     with my_cnx.cursor() as my_cur:
         # my_cur.execute('SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()')
@@ -70,7 +69,6 @@ if st.button('Get Fruit List'):
 
 
 # Allow user to add a fruit to the list
-st.header('View Our Fruit List - Add Your Favorites!')
 def insert_row_snowflake(new_fruit):
     with my_cnx.cursor() as my_cur:
         my_cur.execute(f"insert into fruit_load_list values ('{new_fruit}')")
