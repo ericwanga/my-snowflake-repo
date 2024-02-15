@@ -3,9 +3,9 @@ import streamlit as st
 import pandas as pd
 
 
-st.title('My Title')
-st.title('Another :blue[Blue Title] :sunglasses:')
-st.header('My Header')
+st.title('New Healthy Diner')
+st.title('Healthy :green[breakfast favorites] :sunglasses:')
+st.header('Breakfast Favorites')
 st.text('🥑🍞 Avocado Toast')
 st.text('🥣 Kale, Spinach & Rocket Smoothie')
 st.text('🥗 Omega 3 & Blueberry Oatmeal')
