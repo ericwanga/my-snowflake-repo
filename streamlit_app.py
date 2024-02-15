@@ -73,4 +73,4 @@ add_my_fruit = st.text_input('What fruit would you like to add?')
 st.write('The user added fruit:', add_my_fruit)
 
 my_data_row.append(add_my_fruit)
-st.dataframe(my_data_row)
+st.text(my_data_row)
