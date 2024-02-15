@@ -45,3 +45,5 @@ st.dataframe(fruityvice_normalized)
 # datagov_response = requests.get('https://api.nal.usda.gov/fdc/v1/foods/search' + fruit_choice)
 
 # st.text()
+
+import snowflake.connector
