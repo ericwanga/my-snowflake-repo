@@ -19,7 +19,7 @@ my_fruit_df = my_fruit_df.set_index('Fruit')
 fruits_selected = st.multiselect('Pick some fruits:', list(my_fruit_df.index), ['Avocado', 'Strawberries'])
 st.text(type(fruits_selected))
 # filter df with selected fruits
-fruits_to_show = my_fruit_list.loc[fruits_selected]
+fruits_to_show = my_fruit_df.loc[fruits_selected]
 
 # display
 # st.dataframe(my_fruit_list)
