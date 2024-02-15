@@ -1,6 +1,9 @@
 
 import streamlit as st
 import pandas as pd
+import snowflake.connector
+from urllib.error import URLError
+
 
 
 st.title('New Healthy Diner')
@@ -46,13 +49,28 @@ st.dataframe(fruityvice_normalized)
 
 # st.text()
 
-import snowflake.connector
+# st.stop()
+
+
+
 
 my_cnx = snowflake.connector.connect(**st.secrets['snowflake'])
 my_cur = my_cnx.cursor()
+
 # my_cur.execute('SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()')
 # my_data_row = my_cur.fetchone()
 my_cur.execute('SELECT * from fruit_load_list')
 my_data_row = my_cur.fetchall()
+
 st.header('The fruit load list contains:')
+st.dataframe(my_data_row)
+
+
+# add multiselect
+st.header('You can add a fruit to the list')
+st.text('What fruit would you like to add?')
+add_my_fruit = st.text_input('What fruit would you like to add?')
+st.write('The user added fruit:', add_my_fruit)
+
+my_data_row = my_data_row.append(add_my_fruit)
 st.dataframe(my_data_row)
