@@ -61,6 +61,7 @@ my_cur = my_cnx.cursor()
 # my_data_row = my_cur.fetchone()
 my_cur.execute('SELECT * from fruit_load_list')
 my_data_row = my_cur.fetchall()
+st.text(my_data_row)
 
 st.header('The fruit load list contains:')
 st.dataframe(my_data_row)
