@@ -25,9 +25,12 @@ fruits_selected = st.multiselect('Pick some fruits:', list(my_fruit_df.index), [
 
 # filter df with selected fruits
 fruits_to_show = my_fruit_df.loc[fruits_selected]
-
-# st.dataframe(my_fruit_list)
 st.dataframe(fruits_to_show)
+
+def get_fruityvice_data(this_fruit_choice):
+    fruityvice_response = requests.get('https://fruityvice.com/api/fruit/' + this_fruit_choice)
+    fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
+    return fruityvice_normalized
 
 # call fruityvice API (does not require key)
 st.header('Fruityvice Fruit Advice!')
@@ -36,9 +39,7 @@ try:
     if not fruit_choice:
         st.error('Please select a fruit to get information.')
     else:
-        fruityvice_response = requests.get('https://fruityvice.com/api/fruit/' + fruit_choice)
-        fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
-        st.dataframe(fruityvice_normalized)
+        st.dataframe(get_fruityvice_data(fruit_choice))
 
 except URLError as e:
     st.error()
@@ -75,5 +76,6 @@ st.text('What fruit would you like to add?')
 add_my_fruit = st.text_input('What fruit would you like to add?')
 st.write('The user added fruit:', add_my_fruit)
 
-my_data_row.append(add_my_fruit)
-st.text(my_data_row)
+my_cur.execute(f"insert into fruit_load_list values ({add_my_fruit})")
+my_data_row = my_cur.fetchall()
+st.dataframe(my_data_row)
