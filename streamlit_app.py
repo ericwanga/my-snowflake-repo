@@ -37,3 +37,11 @@ fruityvice_response = requests.get('https://fruityvice.com/api/fruit/' + fruit_c
 # st.text(fruityvice_response.json())
 fruityvice_normalized = pd.json_normalize(fruityvice_response.json())
 st.dataframe(fruityvice_normalized)
+
+
+# my_datagov_api_key = 'm9q3NAYhygSJDZhdELVIxChsgVgMNi2a7AM9DdLS'
+# fruit_choice_datagov = st.text_input('Search food data from US Department of Agriculture FoodData Central')
+# st.write('The user entered', fruit_choice_datagov, '. Searching US Department of Agriculture FoodData Central dataset')
+# datagov_response = requests.get('https://api.nal.usda.gov/fdc/v1/foods/search' + fruit_choice)
+
+# st.text()
