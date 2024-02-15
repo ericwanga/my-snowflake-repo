@@ -37,7 +37,7 @@ st.header('Fruityvice Fruit Advice!')
 try:
     fruit_choice = st.text_input('What fruit would you like information about?')  # ,'Kiwi'
     if not fruit_choice:
-        st.error('Please select a fruit to get information.')
+        st.error('Please type in a fruit to get information.')
     else:
         st.dataframe(get_fruityvice_data(fruit_choice))
 
@@ -68,12 +68,18 @@ if st.button('Get Fruit Load List'):
     st.dataframe(my_data_row)
 
 
-# add multiselect
+# Allow user to add a fruit to the list
 st.header('You can add a fruit to the list')
+def insert_row_snowflake(new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute(f"insert into fruit_load_list values ({new_fruit})")
+        return 'Thanks for adding ' + new_fruit
+    
 add_my_fruit = st.text_input('What fruit would you like to add?')
-st.write('The user added fruit:', add_my_fruit)
-
-st.stop()
-my_cur.execute(f"insert into fruit_load_list values ({add_my_fruit})")
-my_data_row = my_cur.fetchall()
-st.dataframe(my_data_row)
+if st.button('Add a fruit to the list'):
+    my_cnx = snowflake.connector.connect(**st.secrets['snowflake'])
+    message_from_function = insert_row_snowflake(add_my_fruit)
+    st.text(message_from_function)
+    with my_cnx.cursor() as my_cur:
+        updated_fruit_list = my_cur.fetchall()
+        st.dataframe(updated_fruit_list)
