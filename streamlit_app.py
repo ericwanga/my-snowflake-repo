@@ -81,8 +81,8 @@ if st.button('Add a fruit to the list'):
     message_from_function = insert_row_snowflake(str(add_my_fruit))
     st.text(message_from_function)
 
-st.text('Show fruit list')    
-my_cnx = snowflake.connector.connect(**st.secrets['snowflake'])    
-with my_cnx.cursor() as my_cur:
-    updated_fruit_list = my_cur.fetchall()
-    st.dataframe(updated_fruit_list)
+    st.text('Show fruit list')
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute('SELECT * from fruit_load_list')
+        updated_fruit_list = my_cur.fetchall()
+        st.dataframe(updated_fruit_list)
