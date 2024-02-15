@@ -76,6 +76,7 @@ st.text('What fruit would you like to add?')
 add_my_fruit = st.text_input('What fruit would you like to add?')
 st.write('The user added fruit:', add_my_fruit)
 
+st.stop()
 my_cur.execute(f"insert into fruit_load_list values ({add_my_fruit})")
 my_data_row = my_cur.fetchall()
 st.dataframe(my_data_row)
